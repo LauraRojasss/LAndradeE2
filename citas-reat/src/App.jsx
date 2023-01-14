@@ -12,7 +12,7 @@ function App() {
 
     /*Etiqueta padre y el body de la página*/
     <>
-      <Header />
+      <Header/>
       <Formulario/>
       <ListaPacientes/>
 
