@@ -1,6 +1,6 @@
 import Pacientes from "./Pacientes";
 
-function ListaPacientes() {
+function ListaPacientes({ pacientes }) {
   return (
     <div className="md:w-1/2 lg:w-3/5 md:h-screen overflow-y-scroll">
       <h2 className="font-black text-3xl text-center">Listado Pacientes</h2>
@@ -9,10 +9,9 @@ function ListaPacientes() {
         <span className="text-indigo-600 font-bold">Pacientes y Citas</span>
       </p>
 
-      <Pacientes/>
-      <Pacientes/>      
-      <Pacientes/>      
-
+      {pacientes.map((indice) => (
+        <Pacientes indice={indice} />
+      ))}
     </div>
   );
 }

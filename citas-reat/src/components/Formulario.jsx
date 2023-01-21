@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import Error from "./Error";
 
-const Formulario = () => {
+const Formulario = ({ pacientes, setPacientes }) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -16,23 +17,38 @@ const Formulario = () => {
     e.preventDefault();
     // console.log('Enviando formulario...')
 
+    //Validar formulario para que no vaya con campos vacios.
 
-      //Validar formulario para que no vaya con campos vacios.
+    if ([nombre, propietario, email, fecha, sintomas].includes("")) {
+      setError(true);
+      return;
+    }
 
-  if ([nombre, propietario, email, fecha, sintomas].includes('')) {
-    setError(true);
-    return;
-  }
+    setError(false);
 
-  setError(false);
+    //Objeto de paciente - enviar al arrego (prop)
 
+    const objetoPaciente = {
+      nombre,
+      propietario,
+      email,
+      fecha,
+      sintomas,
+    };
+
+    //Para verificar:
+    console.log(objetoPaciente);
+
+    setPacientes([...pacientes, objetoPaciente]);
+
+    //Limpieza de hooks-useState:
+
+    setNombre("");
+    setPropietario("");
+    setEmail("");
+    setFecha("");
+    setSintomas("");
   };
-
-
-
-  //setNombre('Trosky');
-
-  //console.log(nombre);
 
   return (
     <div className="md:w-1/2 lg:w-2/5 mx-5">
@@ -49,11 +65,11 @@ const Formulario = () => {
         className="bg-white shadow-md rounded-lg py-10 px-5 mb-10"
         onSubmit={handleSubmit}
       >
-        {error && (
-          <div className="bg-red-800 text-white p-3 uppercase text-center font-bold rounded-md">
+        {error && 
+          <Error>
             <p>Todos los campos son obligatorios</p>
-          </div>
-        )}
+          </Error>
+        }
 
         <div className="mb-5">
           <label
