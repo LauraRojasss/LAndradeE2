@@ -9,7 +9,11 @@ import ListaPacientes from "./components/ListaPacientes"
 
 function App() {
 
+  //Simbolo arreglo.
   const [pacientes, setPacientes]=useState([]);
+  //Para editar la tarjeta - Extraer valores con la tarjeta para editar y eliminar.
+  //Con {} se usa para objeto.
+  const [paciente, setPaciente]=useState({});
 
   return (
 
@@ -20,8 +24,13 @@ function App() {
           <Formulario
           pacientes={pacientes}
           setPacientes={setPacientes}
+          // Tarjeta - Editar
+          paciente={paciente}
+          setPaciente={setPaciente}
           /> 
           <ListaPacientes
+
+          // OBJETO PACIENTE
           pacientes={pacientes}
 
           />
