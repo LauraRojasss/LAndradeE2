@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import Error from "./Error";
 
-const Formulario = ({ pacientes, setPacientes, paciente}) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente}) => {
   const [nombre, setNombre] = useState("");
   const [propietario, setPropietario] = useState("");
   const [email, setEmail] = useState("");
@@ -21,9 +21,17 @@ const Formulario = ({ pacientes, setPacientes, paciente}) => {
 
   }
 
-  //Revisión del cargue de datos en el form.
+  //Revisión del cargue de datos en el form - Con esto se empieza para poder editar.
   useEffect(()=>{
-    console.log(paciente);
+    // este paciente es de la tarjeta
+    if(Object.keys(paciente).length > 0){
+      setNombre(paciente.nombre)
+      setPropietario(paciente.propietario)
+      setEmail(paciente.email)
+      setFecha(paciente.fecha)
+      setSintomas(paciente.sintomas)
+      setPropietario
+    }
   },[paciente])
   //Limpiar o resetar el formulario cuando carga la página
 
@@ -48,13 +56,33 @@ const Formulario = ({ pacientes, setPacientes, paciente}) => {
       email,
       fecha,
       sintomas,
-      id: generarID()
     };
+
+    //Proceso de actualización.
+    if (paciente.id){
+      objetoPaciente.id= paciente.id
+      // console.log(objetoPaciente)
+      // console.log(paciente)
+      const pacienteActualizado= pacientes.map( 
+          pacienteState=> pacienteState.id===paciente.id ?
+          objetoPaciente: pacienteState
+      )
+
+      setPacientes(pacienteActualizado)
+      setPaciente({})
+
+      // console.log("Editando...")
+    }else{
+      // console.log('Agregando...')
+      objetoPaciente.id= generarID();
+      setPacientes([...pacientes, objetoPaciente]);
+      // console.log(objetoPaciente)
+
+    }
 
     //Para verificar:
     console.log(objetoPaciente);
 
-    setPacientes([...pacientes, objetoPaciente]);
 
     //Limpieza de hooks-useState:
 
@@ -178,7 +206,7 @@ const Formulario = ({ pacientes, setPacientes, paciente}) => {
 
         <input
           type="submit"
-          value="Agregar Mascota"
+          value={paciente.id ? "Editar mascota" : "Agregar"}
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-800 cursor-pointer transition-colors rounded-md"
         />
       </form>

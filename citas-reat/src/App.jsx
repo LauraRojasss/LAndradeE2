@@ -24,13 +24,15 @@ function App() {
           <Formulario
           pacientes={pacientes}
           setPacientes={setPacientes}
-          // Tarjeta - Editar
+          // Tarjeta - Editar  de la tarjeta al form.
           paciente={paciente}
           setPaciente={setPaciente}
+
           /> 
           <ListaPacientes
 
           // OBJETO PACIENTE
+          setPaciente={setPaciente}
           pacientes={pacientes}
 
           />
